@@ -10,7 +10,7 @@ type GithubResult struct {
 	ghc *GithubClient
 	RawHttpResponse *http.Response
 
-	jsonBody interface{}
+	jsonBody JsonData
 	jsonParseError error
 
 	RateLimitLimit string
@@ -58,7 +58,7 @@ func (r *GithubResult) parseHeader() {
     return
 }
 
-func (r *GithubResult) Json() (jr interface{}, err error) {
+func (r *GithubResult) Json() (jr JsonData, err error) {
 	if r.jsonBody == nil && r.jsonParseError == nil {
 		err = r.parseBody()
 
