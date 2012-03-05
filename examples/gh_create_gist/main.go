@@ -1,3 +1,7 @@
+// Copyright 2012 Alca Società Cooperativa. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package main
 
 import (
@@ -27,7 +31,7 @@ func main() {
 
 	ghc_gists := ghgists.NewGists(ghc)
 
-	newGist := ghgists.NewCreateGistData()
+	newGist := ghgists.NewGistDataCreate()
 	newGist.Description = "test go create api"
 	newGist.Public = false
 	newGist.Files["prova1.js"] = ghgists.GistFileContent{Content: "var x=5;"}
@@ -37,7 +41,7 @@ func main() {
 	jr, _ := res.Json()
 	gist_id := jr.GetString("id")
 
-	data := ghgists.NewUpdateGistData()
+	data := ghgists.NewGistDataUpdate()
 	data.Files["prova1.js"] = ghgists.GistFileContent{Filename: "renamed.js",Content: "var x=5;\nvar y=10;"}
 
 	fmt.Printf("UPDATE DATA: %v\n", data)

@@ -1,3 +1,7 @@
+// Copyright 2012 Alca Società Cooperativa. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package client
 
 import (
@@ -27,7 +31,7 @@ func TestCreateNewAPIRequest(t *testing.T) {
 	// TEST BASIC AUTH
 	ghc, _ := NewGithubClient("testuser", "password", AUTH_USER_PASSWORD)
 
-	req, err := ghc.CreateNewAPIRequest("GET", "http://localhost", nil)
+	req, err := ghc.NewAPIRequest("GET", "http://localhost", nil)
 
 	if err != nil {
 		t.Error("CreateNewAPIRequest should not return an error")
@@ -41,7 +45,7 @@ func TestCreateNewAPIRequest(t *testing.T) {
 	// TEST OAUTH2
 	ghc, _ = NewGithubClient("testuser", "MYTOKEN", AUTH_OAUTH2_TOKEN)
 
-	req, err = ghc.CreateNewAPIRequest("GET", "http://localhost", nil)
+	req, err = ghc.NewAPIRequest("GET", "http://localhost", nil)
 
 	if err != nil {
 		t.Error("CreateNewAPIRequest should not return an error")

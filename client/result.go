@@ -1,3 +1,7 @@
+// Copyright 2012 Alca Società Cooperativa. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package client
 
 import (
@@ -6,6 +10,12 @@ import (
 	"encoding/json"
 )
 
+/* 
+GithubResult abstracts a generic reply from the Github REST API, parse it
+internally and adds some helper (e.g. json data, paginated results, rate limits)
+
+GithubResult objects are returned by GithubClient.RunRequest method.
+*/
 type GithubResult struct {
 	ghc *GithubClient
 	RawHttpResponse *http.Response
@@ -33,6 +43,7 @@ func newGithubResult(ghc *GithubClient, resp *http.Response) *GithubResult {
 	return result
 }
 
+// tests if server response status is 200
 func (r *GithubResult) IsSuccess() bool {
 	return r.RawHttpResponse.StatusCode == 200
 }
@@ -58,6 +69,7 @@ func (r *GithubResult) parseHeader() {
     return
 }
 
+// Lazily parse body as json and return unmarshalled results.
 func (r *GithubResult) Json() (jr JsonData, err error) {
 	if r.jsonBody == nil && r.jsonParseError == nil {
 		err = r.parseBody()

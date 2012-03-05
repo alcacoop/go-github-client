@@ -1,3 +1,7 @@
+// Copyright 2012 Alca Società Cooperativa. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package users
 
 import (
@@ -5,10 +9,12 @@ import (
 	"net/http"
 )
 
+// Users is a simplified github users api client.
 type Users struct {
   *ghclient.GithubClient
 }
 
+// create a new github Users client from an existent GithubClient
 func NewUsers(ghc *ghclient.GithubClient) *Users {
 	userc := new(Users)
 	userc.GithubClient = ghc
@@ -16,6 +22,8 @@ func NewUsers(ghc *ghclient.GithubClient) *Users {
 	return userc
 }
 
+// Request the current autenticated user info.
+// It returns a GithubResult and an error.
 func (ghc *Users) GetAuthenticatedUserInfo() (res *ghclient.GithubResult, err error) {
 	req, err := ghc.NewAPIRequest("GET", "user", nil)
 
@@ -30,6 +38,8 @@ func (ghc *Users) GetAuthenticatedUserInfo() (res *ghclient.GithubResult, err er
 	return
 }
 
+// Request github user info about a defined username.
+// It returns a GithubResult and an error.
 func (ghc *Users) GetUserInfo(username string) (res *ghclient.GithubResult, err error) {
 	req, err := ghc.NewAPIRequest("GET", "users/"+username, nil)
 
