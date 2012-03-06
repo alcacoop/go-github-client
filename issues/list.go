@@ -102,7 +102,7 @@ var (
 type RepoListOptions struct {
 	Milestone string `json:"milestone,omitempty"` // MILESTONE_ID, none, *
 	State  IssueState `json:"state,omitempty"` // open, closed
-	Assegnee string `json:"assegnee,omitempty"` // USERNAME, none, *
+	Assignee string `json:"assignee,omitempty"` // USERNAME, none, *
 	Mentioned string `json:"mentioned,omitempty"` // USERNAME
 	Labels string     `json:"labels,omitempty"` // comma separated labels
 	Sort   ListSort   `json:"sort,omitempty"` // created, updated, comments, default: created.
