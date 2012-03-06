@@ -1,8 +1,8 @@
 go-github-client: Github v3 API Client for Go
 =============================================
 
-**githib.com/alcacoop/go-github-client** is a package to simplify interaction
-with the Github Rest API.
+**github.com/alcacoop/go-github-client** is a go package that aims to be 
+a simple and complete way to integrate Github Rest API in go applications.
 
 Quickstart Examples
 -------------------
