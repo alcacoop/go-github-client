@@ -20,7 +20,7 @@ type GithubResult struct {
 	ghc *GithubClient
 	RawHttpResponse *http.Response
 
-	jsonBody JsonData
+	jsonBody interface{}
 	jsonParseError error
 
 	RateLimitLimit string
@@ -38,7 +38,7 @@ func newGithubResult(ghc *GithubClient, resp *http.Response) *GithubResult {
 	result.RawHttpResponse = resp	
 
 	result.parseHeader()
-	result.parseBody()
+	//result.parseBody()
 
 	return result
 }
@@ -49,15 +49,22 @@ func (r *GithubResult) IsSuccess() bool {
 }
 
 func (r *GithubResult) parseBody() (err error) {
-	data, err := ioutil.ReadAll(r.RawHttpResponse.Body)
+	if r.RawHttpResponse.ContentLength == 0 {
+		// EMPTY OBJECT
+		err = json.Unmarshal(([]byte)("[]"), &(r.jsonBody))
+	} else if r.RawHttpResponse.ContentLength != 0 {
+		defer r.RawHttpResponse.Body.Close()
+		data, err := ioutil.ReadAll(r.RawHttpResponse.Body)
 
-	if err != nil {
-		return
-	}
+		if err != nil {
+			return err
+		}
 
-	err = json.Unmarshal(data, &r.jsonBody)
+		r.jsonParseError = json.Unmarshal(data, &(r.jsonBody))
+		err = r.jsonParseError
+	} 
 
-	return
+	return err
 }
 
 func (r *GithubResult) parseHeader() {
@@ -70,7 +77,7 @@ func (r *GithubResult) parseHeader() {
 }
 
 // Lazily parse body as json and return unmarshalled results.
-func (r *GithubResult) Json() (jr JsonData, err error) {
+func (r *GithubResult) Json() (j interface{}, err error) {
 	if r.jsonBody == nil && r.jsonParseError == nil {
 		err = r.parseBody()
 
@@ -81,4 +88,18 @@ func (r *GithubResult) Json() (jr JsonData, err error) {
 	}
 
 	return r.jsonBody, r.jsonParseError
+}
+
+// TBD
+func (r *GithubResult) JsonMap() (j JsonMap, err error) {
+	res, err := r.Json()
+
+	return (JsonMap)(res.(map[string]interface{})), err
+}
+
+// TBD
+func (r *GithubResult) JsonArray() (j JsonArray, err error) {
+	res, err := r.Json()
+
+	return (JsonArray)(res.([]interface{})), err
 }
