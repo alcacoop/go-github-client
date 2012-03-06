@@ -90,6 +90,21 @@ func (ghc *GithubClient) RunRequest(req *http.Request, httpc *http.Client) (res 
 	return 
 }
 
+// TBD
+func (ghc *GithubClient) GetResourceFromUrl(fullResourceUrl string) (res *GithubResult, err error) {
+	// TODO: validate resource url
+	req, err := ghc.newAPIRequest("GET", fullResourceUrl, nil)
+
+	if err != nil {
+		return
+	}
+
+	httpc := new(http.Client)
+
+	res, err = ghc.RunRequest(req, httpc)
+
+	return
+}
 
 
 
