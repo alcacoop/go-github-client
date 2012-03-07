@@ -58,7 +58,7 @@ More Info
 * [Gists](http://gopkgdoc.appspot.com/pkg/github.com/alcacoop/go-github-client/gists)
 
 ### Examples
-* [Usage Examples](http:///github.com/alcacoop/go-github-client/examples)
+* [Usage Examples](https://github.com/alcacoop/go-github-client/tree/master/examples)
 
 ### Dev Updates
 
