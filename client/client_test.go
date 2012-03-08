@@ -5,8 +5,8 @@
 package client
 
 import (
-	"testing"
 	"encoding/base64"
+	"testing"
 )
 
 func TestGhAuthModesValidation(t *testing.T) {
@@ -37,7 +37,7 @@ func TestCreateNewAPIRequest(t *testing.T) {
 		t.Error("CreateNewAPIRequest should not return an error")
 	}
 
-	if req.Header.Get("Authorization") != "Basic "+ 
+	if req.Header.Get("Authorization") != "Basic "+
 		base64.StdEncoding.EncodeToString([]byte("testuser:password")) {
 		t.Error("Request should contain correct basic auth info")
 	}

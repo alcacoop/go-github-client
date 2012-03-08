@@ -5,10 +5,10 @@
 package main
 
 import (
-	ghclient "github.com/alcacoop/go-github-client/client"
-	ghusers "github.com/alcacoop/go-github-client/users"
 	"flag"
 	"fmt"
+	ghclient "github.com/alcacoop/go-github-client/client"
+	ghusers "github.com/alcacoop/go-github-client/users"
 )
 
 func main() {
@@ -28,15 +28,14 @@ func main() {
 		return
 	}
 
-   ghc, err := ghclient.NewGithubClient(*username, *password, 
+	ghc, err := ghclient.NewGithubClient(*username, *password,
 		ghclient.AUTH_USER_PASSWORD)
 
 	ghusersc := ghusers.NewUsers(ghc)
 
 	res, err := ghusersc.GetUserInfo(*userinfo)
- 
-    jr, err := res.Json()
+
+	jr, err := res.Json()
 
 	fmt.Printf("JSON: %v\nHTTP REPLY: %v\nERROR: %v\n", jr, res.RawHttpResponse, err)
 }
-

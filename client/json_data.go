@@ -48,7 +48,6 @@ func (j JsonMap) GetArray(attr string) JsonArray {
 	return (JsonArray)(j[attr].([]interface{}))
 }
 
-
 type JsonArray []interface{}
 
 func (j JsonArray) GetString(idx int) string {

@@ -5,11 +5,11 @@
 package issues
 
 import (
+	"bytes"
+	"encoding/json"
+	"errors"
 	ghclient "github.com/alcacoop/go-github-client/client"
 	"net/http"
-	"encoding/json"
-	"bytes"
-	"errors"
 )
 
 var ErrInvalidIssuesListOptions error = errors.New("Invalid Issue List Options")
@@ -17,42 +17,42 @@ var ErrInvalidIssuesListOptions error = errors.New("Invalid Issue List Options")
 type UserListFilter string
 
 var (
-	FILTER_ASSIGNED UserListFilter = "assigned"
-	FILTER_CREATED UserListFilter = "created"
-	FILTER_MENTIONED UserListFilter = "mentioned"
+	FILTER_ASSIGNED   UserListFilter = "assigned"
+	FILTER_CREATED    UserListFilter = "created"
+	FILTER_MENTIONED  UserListFilter = "mentioned"
 	FILTER_SUBSCRIBED UserListFilter = "subscribed"
 )
 
 type IssueState string
 
 var (
-	STATE_OPEN IssueState = "open"
+	STATE_OPEN   IssueState = "open"
 	STATE_CLOSED IssueState = "closed"
 )
 
 type ListSort string
 
 var (
-	SORT_CREATED ListSort = "created"
-	SORT_UPDATED ListSort = "updated"
+	SORT_CREATED  ListSort = "created"
+	SORT_UPDATED  ListSort = "updated"
 	SORT_COMMENTS ListSort = "comments"
 )
 
 type ListDirection string
 
 var (
-	DIRECTION_ASC ListDirection = "asc"
+	DIRECTION_ASC  ListDirection = "asc"
 	DIRECTION_DESC ListDirection = "desc"
 )
 
 // TBD
 type UserListOptions struct {
-	Filter UserListFilter `json:"filter,omitempty"` // assigned, created, mentioned, subscribed	
-	State  IssueState `json:"state,omitempty"` // open, closed
-	Labels string     `json:"labels,omitempty"` // comma separated labels
-	Sort   ListSort   `json:"sort,omitempty"` // created, updated, comments, default: created.
-	Direction   ListSort   `json:"direction,omitempty"` // asc, desc, default: desc
-	Since  string     `json:"since,omitempty"` // timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+	Filter    UserListFilter `json:"filter,omitempty"`    // assigned, created, mentioned, subscribed	
+	State     IssueState     `json:"state,omitempty"`     // open, closed
+	Labels    string         `json:"labels,omitempty"`    // comma separated labels
+	Sort      ListSort       `json:"sort,omitempty"`      // created, updated, comments, default: created.
+	Direction ListSort       `json:"direction,omitempty"` // asc, desc, default: desc
+	Since     string         `json:"since,omitempty"`     // timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
 }
 
 // TBD
@@ -69,7 +69,7 @@ func (ghc *Issues) GetUserIssuesList(options *UserListOptions) (res *ghclient.Gi
 	}
 
 	body, err := json.Marshal(options)
-	
+
 	if err != nil {
 		return
 	}
@@ -95,19 +95,19 @@ func (ghc *Issues) GetUserIssuesList(options *UserListOptions) (res *ghclient.Gi
 /////////////////////
 
 var (
-	ALL string = "*"
+	ALL  string = "*"
 	NONE string = "none"
 )
 
 type RepoListOptions struct {
-	Milestone string `json:"milestone,omitempty"` // MILESTONE_ID, none, *
-	State  IssueState `json:"state,omitempty"` // open, closed
-	Assignee string `json:"assignee,omitempty"` // USERNAME, none, *
-	Mentioned string `json:"mentioned,omitempty"` // USERNAME
-	Labels string     `json:"labels,omitempty"` // comma separated labels
-	Sort   ListSort   `json:"sort,omitempty"` // created, updated, comments, default: created.
-	Direction   ListSort   `json:"direction,omitempty"` // asc, desc, default: desc
-	Since  string     `json:"since,omitempty"` // timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+	Milestone string     `json:"milestone,omitempty"` // MILESTONE_ID, none, *
+	State     IssueState `json:"state,omitempty"`     // open, closed
+	Assignee  string     `json:"assignee,omitempty"`  // USERNAME, none, *
+	Mentioned string     `json:"mentioned,omitempty"` // USERNAME
+	Labels    string     `json:"labels,omitempty"`    // comma separated labels
+	Sort      ListSort   `json:"sort,omitempty"`      // created, updated, comments, default: created.
+	Direction ListSort   `json:"direction,omitempty"` // asc, desc, default: desc
+	Since     string     `json:"since,omitempty"`     // timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
 }
 
 func (s *RepoListOptions) IsValid() bool {
@@ -116,7 +116,7 @@ func (s *RepoListOptions) IsValid() bool {
 }
 
 // TBD
-func (ghc *Issues) GetRepoIssuesList(user string, repo string, 
+func (ghc *Issues) GetRepoIssuesList(user string, repo string,
 	options *RepoListOptions) (res *ghclient.GithubResult, err error) {
 	if options == nil || !options.IsValid() {
 		err = ErrInvalidIssuesListOptions
@@ -124,7 +124,7 @@ func (ghc *Issues) GetRepoIssuesList(user string, repo string,
 	}
 
 	body, err := json.Marshal(options)
-	
+
 	if err != nil {
 		return
 	}

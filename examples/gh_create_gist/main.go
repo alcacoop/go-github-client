@@ -5,10 +5,10 @@
 package main
 
 import (
-	ghclient "github.com/alcacoop/go-github-client/client"
-	ghgists "github.com/alcacoop/go-github-client/gists"
 	"flag"
 	"fmt"
+	ghclient "github.com/alcacoop/go-github-client/client"
+	ghgists "github.com/alcacoop/go-github-client/gists"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 	}
 	flag.Parse()
 
-	if *help == true || *username == "" || *password == ""{
+	if *help == true || *username == "" || *password == "" {
 		flag.Usage()
 		return
 	}
@@ -42,7 +42,7 @@ func main() {
 	gist_id := jr.GetString("id")
 
 	data := ghgists.NewGistDataUpdate()
-	data.Files["prova1.js"] = ghgists.GistFileContent{Filename: "renamed.js",Content: "var x=5;\nvar y=10;"}
+	data.Files["prova1.js"] = ghgists.GistFileContent{Filename: "renamed.js", Content: "var x=5;\nvar y=10;"}
 
 	fmt.Printf("UPDATE DATA: %v\n", data)
 

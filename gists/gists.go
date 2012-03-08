@@ -10,7 +10,7 @@ import (
 
 // Gists is a simplified github gists api client
 type Gists struct {
-  *ghclient.GithubClient
+	*ghclient.GithubClient
 }
 
 // create a new github Gists client from an existent GithubClient

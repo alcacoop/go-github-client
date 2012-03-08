@@ -5,11 +5,11 @@
 package gists
 
 import (
+	"bytes"
+	"encoding/json"
+	"errors"
 	ghclient "github.com/alcacoop/go-github-client/client"
 	"net/http"
-	"encoding/json"
-	"bytes"
-	"errors"
 )
 
 var (
@@ -36,9 +36,9 @@ func (ghc *Gists) GetGist(gistId string) (res *ghclient.GithubResult, err error)
 // GistDataCreate represents a gists create payload.
 // (used as "gists.CreateGist" api call parameter)
 type GistDataCreate struct {
-	Description string `json:"description,omitempty"` // optional
-	Public bool `json:"public"` // required
-	Files map[string]GistFileContent `json:"files"` // required
+	Description string                     `json:"description,omitempty"` // optional
+	Public      bool                       `json:"public"`                // required
+	Files       map[string]GistFileContent `json:"files"`                 // required
 }
 
 // create a new GistDataCreate struct
@@ -58,8 +58,8 @@ func (cgd *GistDataCreate) IsValid() bool {
 // GistDataCreate represents a gists update payload
 // (used as "gists.UpdateGist" api call parameter)
 type GistDataUpdate struct {
-	Description string `json:"description,omitempty"` // optional
-	Files map[string]GistFileContent `json:"files"` // required
+	Description string                     `json:"description,omitempty"` // optional
+	Files       map[string]GistFileContent `json:"files"`                 // required
 }
 
 // create a new GistDataUpdate struct
@@ -92,7 +92,7 @@ func (cgd *GistDataUpdate) IsValid() bool {
 //                                                        Content: "var x=5;"}
 type GistFileContent struct {
 	Filename string `json:"filename,omitempty"` // optional (used on UpdateGistData)
-	Content string `json:"content"` // required
+	Content  string `json:"content"`            // required
 }
 
 // create a new gists using a given GistDataCreate struct.
@@ -104,7 +104,7 @@ func (ghc *Gists) CreateGist(data *GistDataCreate) (res *ghclient.GithubResult, 
 	}
 
 	body, err := json.Marshal(data)
-	
+
 	if err != nil {
 		return
 	}
@@ -119,7 +119,7 @@ func (ghc *Gists) CreateGist(data *GistDataCreate) (res *ghclient.GithubResult, 
 
 	res, err = ghc.RunRequest(req, httpc)
 
-	return	
+	return
 }
 
 // update an existent gists using a given gist id and  GistDataCreate struct.
@@ -131,7 +131,7 @@ func (ghc *Gists) UpdateGist(gistid string, data *GistDataUpdate) (res *ghclient
 	}
 
 	body, err := json.Marshal(data)
-	
+
 	if err != nil {
 		return
 	}
@@ -146,5 +146,5 @@ func (ghc *Gists) UpdateGist(gistid string, data *GistDataUpdate) (res *ghclient
 
 	res, err = ghc.RunRequest(req, httpc)
 
-	return	
+	return
 }

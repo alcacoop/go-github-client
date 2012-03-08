@@ -16,10 +16,10 @@ const ghBaseApiUrl = "https://api.github.com/"
 
 var (
 	ErrInvalidAuthMethod = errors.New("Invalid Github Auth Method")
-	ErrNoNextPageUrl = errors.New("No next page url")
-	ErrNoPrevPageUrl = errors.New("No prev page url")
-	ErrNoFirstPageUrl = errors.New("No first page url")
-	ErrNoLastPageUrl = errors.New("No last page url")
+	ErrNoNextPageUrl     = errors.New("No next page url")
+	ErrNoPrevPageUrl     = errors.New("No prev page url")
+	ErrNoFirstPageUrl    = errors.New("No first page url")
+	ErrNoLastPageUrl     = errors.New("No last page url")
 )
 
 // AUTH METHODS
@@ -42,8 +42,8 @@ func (s ghAuthModes) IsValid() (ok bool) {
 
 type GithubClient struct {
 	login           string
-    tokenOrPassword string
-    authMode          ghAuthModes
+	tokenOrPassword string
+	authMode        ghAuthModes
 }
 
 func NewGithubClient(login string, tokenOrPassword string, authMode ghAuthModes) (ghc *GithubClient, err error) {
@@ -51,13 +51,13 @@ func NewGithubClient(login string, tokenOrPassword string, authMode ghAuthModes)
 		return nil, ErrInvalidAuthMethod
 	}
 
-	ghc = &GithubClient{login: login, tokenOrPassword: tokenOrPassword,	authMode: authMode}
+	ghc = &GithubClient{login: login, tokenOrPassword: tokenOrPassword, authMode: authMode}
 
 	return ghc, nil
 }
 
 func (ghc *GithubClient) NewAPIRequest(method, url string, body io.Reader) (req *http.Request, err error) {
-	return ghc.newAPIRequest(method, ghBaseApiUrl + url, body)
+	return ghc.newAPIRequest(method, ghBaseApiUrl+url, body)
 }
 
 func (ghc *GithubClient) newAPIRequest(method, url string, body io.Reader) (req *http.Request, err error) {
@@ -67,7 +67,7 @@ func (ghc *GithubClient) newAPIRequest(method, url string, body io.Reader) (req 
 		return
 	}
 
-	switch ; ghc.authMode {
+	switch ghc.authMode {
 	case AUTH_OAUTH2_TOKEN:
 		req.Header.Add("Authorization", "token "+ghc.tokenOrPassword)
 	case AUTH_USER_PASSWORD:
@@ -76,7 +76,6 @@ func (ghc *GithubClient) newAPIRequest(method, url string, body io.Reader) (req 
 
 	return
 }
-
 
 func (ghc *GithubClient) RunRequest(req *http.Request, httpc *http.Client) (res *GithubResult, err error) {
 	resp, err := httpc.Do(req)
@@ -87,7 +86,7 @@ func (ghc *GithubClient) RunRequest(req *http.Request, httpc *http.Client) (res 
 
 	res = newGithubResult(ghc, resp)
 
-	return 
+	return
 }
 
 // TBD
@@ -105,6 +104,3 @@ func (ghc *GithubClient) GetResourceFromUrl(fullResourceUrl string) (res *Github
 
 	return
 }
-
-
-

@@ -5,9 +5,9 @@
 package client
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"encoding/json"
 )
 
 /* 
@@ -17,25 +17,25 @@ internally and adds some helper (e.g. json data, paginated results, rate limits)
 GithubResult objects are returned by GithubClient.RunRequest method.
 */
 type GithubResult struct {
-	ghc *GithubClient
+	ghc             *GithubClient
 	RawHttpResponse *http.Response
 
-	jsonBody interface{}
+	jsonBody       interface{}
 	jsonParseError error
 
-	RateLimitLimit string
+	RateLimitLimit     string
 	RateLimitRemaining string
 
 	firstPageUrl string
-	lastPageUrl string
-	prevPageUrl string
-    nextPageUrl string
+	lastPageUrl  string
+	prevPageUrl  string
+	nextPageUrl  string
 }
 
 func newGithubResult(ghc *GithubClient, resp *http.Response) *GithubResult {
 	result := new(GithubResult)
 	result.ghc = ghc
-	result.RawHttpResponse = resp	
+	result.RawHttpResponse = resp
 
 	result.parseHeader()
 	//result.parseBody()
@@ -62,7 +62,7 @@ func (r *GithubResult) parseBody() (err error) {
 
 		r.jsonParseError = json.Unmarshal(data, &(r.jsonBody))
 		err = r.jsonParseError
-	} 
+	}
 
 	return err
 }
@@ -70,10 +70,10 @@ func (r *GithubResult) parseBody() (err error) {
 func (r *GithubResult) parseHeader() {
 	r.RateLimitLimit = r.RawHttpResponse.Header.Get("X-Ratelimit-Limit")
 	r.RateLimitRemaining = r.RawHttpResponse.Header.Get("X-Ratelimit-Remaining")
-	
+
 	r.parsePageUrls(r.RawHttpResponse.Header.Get("Link"))
 
-    return
+	return
 }
 
 // Lazily parse body as json and return unmarshalled results.

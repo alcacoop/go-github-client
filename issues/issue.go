@@ -5,11 +5,11 @@
 package issues
 
 import (
+	"bytes"
+	"encoding/json"
+	"errors"
 	ghclient "github.com/alcacoop/go-github-client/client"
 	"net/http"
-	"encoding/json"
-	"bytes"
-	"errors"
 )
 
 var (
@@ -36,11 +36,11 @@ func (ghc *Issues) GetIssue(user, repo, issueId string) (res *ghclient.GithubRes
 
 // TBD
 type IssueDataCreate struct {
-	Title string `json:"title"` // required
-	Body string `json:"body,omitempty"` // optional
-	Assignee string `json:"body,omitempty"` // optional
-	Milestone int `json:"body,omitempty"` // optional
-	Labels []string `json"labels,omitempty"` // optional	
+	Title     string   `json:"title"`           // required
+	Body      string   `json:"body,omitempty"`  // optional
+	Assignee  string   `json:"body,omitempty"`  // optional
+	Milestone int      `json:"body,omitempty"`  // optional
+	Labels    []string `json"labels,omitempty"` // optional	
 }
 
 // TBD
@@ -57,12 +57,12 @@ func (ghc *Issues) CreateIssue(user, repo string, data *IssueDataCreate) (res *g
 	}
 
 	body, err := json.Marshal(data)
-	
+
 	if err != nil {
 		return
 	}
 
-	req, err := ghc.NewAPIRequest("POST", "/repos/"+user+"/"+repo+"/issues", 
+	req, err := ghc.NewAPIRequest("POST", "/repos/"+user+"/"+repo+"/issues",
 		bytes.NewBuffer(body))
 
 	if err != nil {
@@ -73,7 +73,7 @@ func (ghc *Issues) CreateIssue(user, repo string, data *IssueDataCreate) (res *g
 
 	res, err = ghc.RunRequest(req, httpc)
 
-	return	
+	return
 }
 
 /////////////////
@@ -82,12 +82,12 @@ func (ghc *Issues) CreateIssue(user, repo string, data *IssueDataCreate) (res *g
 
 // TBD
 type IssueDataUpdate struct {
-	Title string `json:"title,omitempty"` // optional
-	Body string `json:"body,omitempty"` // optional
-	Assignee string `json:"body,omitempty"` // optional
-	State IssueState `json:"state,omitempty"` // optional
-	Milestone int `json:"body,omitempty"` // optional
-	Labels []string `json"labels,omitempty"` // optional	
+	Title     string     `json:"title,omitempty"` // optional
+	Body      string     `json:"body,omitempty"`  // optional
+	Assignee  string     `json:"body,omitempty"`  // optional
+	State     IssueState `json:"state,omitempty"` // optional
+	Milestone int        `json:"body,omitempty"`  // optional
+	Labels    []string   `json"labels,omitempty"` // optional	
 }
 
 // TBD
@@ -104,12 +104,12 @@ func (ghc *Issues) UpdateIssue(user, repo, issueId string, data *IssueDataUpdate
 	}
 
 	body, err := json.Marshal(data)
-	
+
 	if err != nil {
 		return
 	}
 
-	req, err := ghc.NewAPIRequest("PATCH", "/repos/"+user+"/"+repo+"/issues"+issueId, 
+	req, err := ghc.NewAPIRequest("PATCH", "/repos/"+user+"/"+repo+"/issues"+issueId,
 		bytes.NewBuffer(body))
 
 	if err != nil {
@@ -120,5 +120,5 @@ func (ghc *Issues) UpdateIssue(user, repo, issueId string, data *IssueDataUpdate
 
 	res, err = ghc.RunRequest(req, httpc)
 
-	return	
+	return
 }

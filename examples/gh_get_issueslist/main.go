@@ -5,11 +5,11 @@
 package main
 
 import (
-//	"encoding/json"
-	ghclient "github.com/alcacoop/go-github-client/client"
-	ghissues "github.com/alcacoop/go-github-client/issues"
+	//	"encoding/json"
 	"flag"
 	"fmt"
+	ghclient "github.com/alcacoop/go-github-client/client"
+	ghissues "github.com/alcacoop/go-github-client/issues"
 )
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 	}
 	flag.Parse()
 
-	if *help == true || *username == "" || *password == ""{
+	if *help == true || *username == "" || *password == "" {
 		flag.Usage()
 		return
 	}
@@ -32,14 +32,14 @@ func main() {
 
 	issuesc := ghissues.NewIssues(ghc)
 
-	res, err := issuesc.GetRepoIssuesList("remogatto", "livegist", 
+	res, err := issuesc.GetRepoIssuesList("remogatto", "livegist",
 		&ghissues.RepoListOptions{})
 
 	fmt.Printf("RESPONSE: %v\nERROR: %v\n", res.RawHttpResponse, err)
 
 	/*var body []byte = make([]byte, 10000)
 
-	_, err = res.RawHttpResponse.Body.Read(body)*/
+		_, err = res.RawHttpResponse.Body.Read(body)*/
 
 	//data, err := ioutil.ReadAll(res.RawHttpResponse.Body)
 
@@ -47,7 +47,7 @@ func main() {
 
 	/*var jr interface{}
 
-	err := json.Unmarshal(([]byte)("[{\"prova\": 5}]"), &jr)*/
+		err := json.Unmarshal(([]byte)("[{\"prova\": 5}]"), &jr)*/
 
 	fmt.Printf("JSON: %v\nERROR: %v\n", jr, err)
 }

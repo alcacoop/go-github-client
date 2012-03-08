@@ -11,7 +11,7 @@ import (
 
 // Users is a simplified github users api client.
 type Users struct {
-  *ghclient.GithubClient
+	*ghclient.GithubClient
 }
 
 // create a new github Users client from an existent GithubClient

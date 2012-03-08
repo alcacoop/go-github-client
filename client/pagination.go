@@ -13,7 +13,7 @@ import (
 func (r *GithubResult) parsePageUrls(link string) {
 	reUrls, _ := regexp.Compile("<(.*)>; rel=\"(.*)\"")
 
-	urls := strings.Split(link,",")
+	urls := strings.Split(link, ",")
 
 	for i := range urls {
 		m := reUrls.FindStringSubmatch(urls[i])
@@ -37,10 +37,10 @@ func (r *GithubResult) parsePageUrls(link string) {
 
 // returns true if the result is paginated
 func (r *GithubResult) IsPaginated() (ok bool) {
-	if (r.nextPageUrl != "" || r.prevPageUrl != "" ||
-		r.firstPageUrl != "" || r.lastPageUrl != "") {
+	if r.nextPageUrl != "" || r.prevPageUrl != "" ||
+		r.firstPageUrl != "" || r.lastPageUrl != "" {
 		ok = true
-    } else {
+	} else {
 		ok = false
 	}
 	return
@@ -48,7 +48,7 @@ func (r *GithubResult) IsPaginated() (ok bool) {
 
 // returns true if the result has a next page
 func (r *GithubResult) HasNextPage() (ok bool) {
-	if (r.nextPageUrl != "") {
+	if r.nextPageUrl != "" {
 		ok = true
 	} else {
 		ok = false
@@ -58,7 +58,7 @@ func (r *GithubResult) HasNextPage() (ok bool) {
 
 // returns true if the result has a previous page
 func (r *GithubResult) HasPrevPage() (ok bool) {
-	if (r.prevPageUrl != "") {
+	if r.prevPageUrl != "" {
 		ok = true
 	} else {
 		ok = false
@@ -68,7 +68,7 @@ func (r *GithubResult) HasPrevPage() (ok bool) {
 
 // returns true if the result has a first page link
 func (r *GithubResult) HasFirstPage() (ok bool) {
-	if (r.firstPageUrl != "") {
+	if r.firstPageUrl != "" {
 		ok = true
 	} else {
 		ok = false
@@ -78,7 +78,7 @@ func (r *GithubResult) HasFirstPage() (ok bool) {
 
 // returns true if the result has a last page link
 func (r *GithubResult) HasLastPage() (ok bool) {
-	if (r.lastPageUrl != "") {
+	if r.lastPageUrl != "" {
 		ok = true
 	} else {
 		ok = false

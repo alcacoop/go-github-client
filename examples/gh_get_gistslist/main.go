@@ -5,10 +5,10 @@
 package main
 
 import (
-	ghclient "github.com/alcacoop/go-github-client/client"
-	ghgists "github.com/alcacoop/go-github-client/gists"
 	"flag"
 	"fmt"
+	ghclient "github.com/alcacoop/go-github-client/client"
+	ghgists "github.com/alcacoop/go-github-client/gists"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 	}
 	flag.Parse()
 
-	if *help == true || *username == "" || *password == ""{
+	if *help == true || *username == "" || *password == "" {
 		flag.Usage()
 		return
 	}

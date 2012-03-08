@@ -10,7 +10,7 @@ import (
 
 // Issues is a simplified github issues api client
 type Issues struct {
-  *ghclient.GithubClient
+	*ghclient.GithubClient
 }
 
 // create a new github issues client from an existent GithubClient

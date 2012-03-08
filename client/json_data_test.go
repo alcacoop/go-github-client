@@ -5,15 +5,15 @@
 package client
 
 import (
-	"testing"
 	"encoding/json"
+	"testing"
 )
 
 func TestJsonData(t *testing.T) {
-    rawData := "{ \"attr1\": \"string1\", \"attr2\": 2, \"attr3\": 5.34, \"attr4\": { \"name\": \"obj1\" } }"
+	rawData := "{ \"attr1\": \"string1\", \"attr2\": 2, \"attr3\": 5.34, \"attr4\": { \"name\": \"obj1\" } }"
 	var jd JsonData = make(JsonData)
 
-    if err := json.Unmarshal(([]byte)(rawData), &jd); err != nil {
+	if err := json.Unmarshal(([]byte)(rawData), &jd); err != nil {
 		t.Fatal()
 	}
 
@@ -22,5 +22,5 @@ func TestJsonData(t *testing.T) {
 		jd.GetFloat("attr3") != 5.34 ||
 		jd.GetObject("attr4").GetString("name") != "obj1" {
 		t.Fatal()
-	}	
+	}
 }
