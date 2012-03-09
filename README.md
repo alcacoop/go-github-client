@@ -52,9 +52,9 @@ $ go install github.com/alcacoop/go-github-client/issues
 You can build and install some example applications using "go install":
 
 ```
-$ go install github.com/alcacoop/go-github-client/examples/gh\_get\_userinfo
+$ go install github.com/alcacoop/go-github-client/examples/gh_get_userinfo
 
-$ $GOPATH/bin/gh\_get\_userinfo
+$ $GOPATH/bin/gh_get_userinfo
 ...
 ```
 
