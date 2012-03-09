@@ -26,6 +26,38 @@ Of course, we're looking forward for your feedback & patches :)
 Quickstart Examples
 -------------------
 
+### go get & go install
+
+Download go-gothub-client and install go-github-client/client:
+
+```
+$ go get github.com/alcacoop/go-github-client/client
+```
+
+This command clone all the repository in "$GOPATH/src/github.com/alcacoop/go-github-client"
+and install "github.com/alcacoop/go-github-client/client" package in "$GOPATH/pkg/ARCH/github.com/alcacoop/go-github-client/client.a"
+
+Now you can "go install" all the other subpackage (or just what you want):
+
+```
+$ go install github.com/alcacoop/go-github-client/users
+
+$ go install github.com/alcacoop/go-github-client/gists
+
+$ go install github.com/alcacoop/go-github-client/issues
+```
+
+### go-github-client command line example applications
+
+You can build and install some example applications using "go install":
+
+```
+$ go install github.com/alcacoop/go-github-client/examples/gh\_get\_userinfo
+
+$ $GOPATH/bin/gh\_get\_userinfo
+...
+```
+
 ### Create an authenticated GitHub API Client using Basic Authentication method
 
 ```
