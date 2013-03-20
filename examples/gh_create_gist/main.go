@@ -7,8 +7,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	ghclient "github.com/alcacoop/go-github-client/client"
-	ghgists "github.com/alcacoop/go-github-client/gists"
+	ghclient "github.com/fluffle/go-github-client/client"
+	ghgists "github.com/fluffle/go-github-client/gists"
 )
 
 func main() {

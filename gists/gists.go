@@ -5,7 +5,7 @@
 package gists
 
 import (
-	ghclient "github.com/alcacoop/go-github-client/client"
+	ghclient "github.com/fluffle/go-github-client/client"
 )
 
 // Gists is a simplified github gists api client

@@ -5,7 +5,7 @@
 package issues
 
 import (
-	ghclient "github.com/alcacoop/go-github-client/client"
+	ghclient "github.com/fluffle/go-github-client/client"
 )
 
 // Issues is a simplified github issues api client
