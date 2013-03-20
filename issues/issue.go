@@ -38,9 +38,9 @@ func (ghc *Issues) GetIssue(user, repo, issueId string) (res *ghclient.GithubRes
 type IssueDataCreate struct {
 	Title     string   `json:"title"`           // required
 	Body      string   `json:"body,omitempty"`  // optional
-	Assignee  string   `json:"body,omitempty"`  // optional
-	Milestone int      `json:"body,omitempty"`  // optional
-	Labels    []string `json"labels,omitempty"` // optional	
+	Assignee  string   `json:"assignee,omitempty"`  // optional
+	Milestone int      `json:"milestone,omitempty"`  // optional
+	Labels    []string `json:"labels,omitempty"` // optional
 }
 
 // TBD
@@ -62,7 +62,7 @@ func (ghc *Issues) CreateIssue(user, repo string, data *IssueDataCreate) (res *g
 		return
 	}
 
-	req, err := ghc.NewAPIRequest("POST", "/repos/"+user+"/"+repo+"/issues",
+	req, err := ghc.NewAPIRequest("POST", "repos/"+user+"/"+repo+"/issues",
 		bytes.NewBuffer(body))
 
 	if err != nil {
@@ -84,10 +84,10 @@ func (ghc *Issues) CreateIssue(user, repo string, data *IssueDataCreate) (res *g
 type IssueDataUpdate struct {
 	Title     string     `json:"title,omitempty"` // optional
 	Body      string     `json:"body,omitempty"`  // optional
-	Assignee  string     `json:"body,omitempty"`  // optional
+	Assignee  string     `json:"assignee,omitempty"`  // optional
 	State     IssueState `json:"state,omitempty"` // optional
-	Milestone int        `json:"body,omitempty"`  // optional
-	Labels    []string   `json"labels,omitempty"` // optional	
+	Milestone int        `json:"milestone,omitempty"`  // optional
+	Labels    []string   `json:"labels,omitempty"` // optional
 }
 
 // TBD
@@ -109,7 +109,7 @@ func (ghc *Issues) UpdateIssue(user, repo, issueId string, data *IssueDataUpdate
 		return
 	}
 
-	req, err := ghc.NewAPIRequest("PATCH", "/repos/"+user+"/"+repo+"/issues"+issueId,
+	req, err := ghc.NewAPIRequest("PATCH", "repos/"+user+"/"+repo+"/issues"+issueId,
 		bytes.NewBuffer(body))
 
 	if err != nil {
