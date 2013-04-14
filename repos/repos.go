@@ -5,8 +5,8 @@
 package repos
 
 import (
-	ghclient "github.com/alcacoop/go-github-client/client"
-	ghuser "github.com/alcacoop/go-github-client/users"
+	ghclient "github.com/iansmith/go-github-client/client"
+	ghuser "github.com/iansmith/go-github-client/users"
 	"fmt"
 	"net/http"
 )

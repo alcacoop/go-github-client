@@ -5,7 +5,7 @@
 package users
 
 import (
-	ghclient "github.com/alcacoop/go-github-client/client"
+	ghclient "github.com/iansmith/go-github-client/client"
 	"net/http"
 )
 
