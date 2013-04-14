@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	_ "fmt"
 )
 
 /* 
@@ -48,7 +49,7 @@ func (r *GithubResult) IsSuccess() bool {
 	return r.RawHttpResponse.StatusCode == 200
 }
 
-func (r *GithubResult) parseBody() (err error) {
+func (r *GithubResult) parseBody(in interface{}) (err error) {
 	if r.RawHttpResponse.ContentLength == 0 {
 		// EMPTY OBJECT
 		err = json.Unmarshal(([]byte)("[]"), &(r.jsonBody))
@@ -59,8 +60,15 @@ func (r *GithubResult) parseBody() (err error) {
 		if err != nil {
 			return err
 		}
-
-		r.jsonParseError = json.Unmarshal(data, &(r.jsonBody))
+		
+		if in!=nil {
+			r.jsonParseError = json.Unmarshal(data, in)
+			if r.jsonParseError==nil {
+				r.jsonBody = in
+			}
+		} else {
+			r.jsonParseError = json.Unmarshal(data, &(r.jsonBody))
+		}
 		err = r.jsonParseError
 	}
 
@@ -76,10 +84,23 @@ func (r *GithubResult) parseHeader() {
 	return
 }
 
+//Parse body into a pointer to the appropriate struct
+func (r *GithubResult) JsonStruct(in interface{}) (j interface{}, err error) {
+	if r.jsonBody == nil && r.jsonParseError == nil {
+		err = r.parseBody(in)
+
+		if err != nil {
+			r.jsonParseError = err
+			return
+		}
+	}
+
+	return r.jsonBody, r.jsonParseError
+}
 // Lazily parse body as json and return unmarshalled results.
 func (r *GithubResult) Json() (j interface{}, err error) {
 	if r.jsonBody == nil && r.jsonParseError == nil {
-		err = r.parseBody()
+		err = r.parseBody(nil)
 
 		if err != nil {
 			r.jsonParseError = err
