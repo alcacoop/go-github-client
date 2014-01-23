@@ -1,6 +1,12 @@
 go-github-client: Github v3 API Client for Go
 =============================================
 
+DEPRECATED
+----------
+
+**go-github-client** is now superseded by [google/go-github](https://github.com/google/go-github)
+package released by Google.
+
 Description
 -----------
 
