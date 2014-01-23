@@ -8,6 +8,7 @@ import (
 	"errors"
 	"io"
 	"net/http"
+	"fmt"
 )
 
 const ghBaseApiUrl = "https://api.github.com/"
@@ -84,6 +85,8 @@ func (ghc *GithubClient) RunRequest(req *http.Request, httpc *http.Client) (res 
 		return
 	}
 
+	fmt.Printf("REQ %+v\n\n",req)
+	fmt.Printf("RESP %+v\n\n",resp)
 	res = newGithubResult(ghc, resp)
 
 	return
